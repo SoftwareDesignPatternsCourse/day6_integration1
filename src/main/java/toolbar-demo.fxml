@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.TextField?>
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="WeatherAppController">
     <top>
@@ -30,11 +31,20 @@
     <center>
         <VBox styleClass="content">
 	        <VBox>
-			    <TextField fx:id="inputTextField" promptText="Enter text"/>
-			    <Button text="Update Label" onAction="#updateLabel"/>
-			    <Label fx:id="yourLabel" text="Default Value"/>
+			    <TextField fx:id="inputTextField" promptText="Enter a city"/>
+			    <Button text="Get Weather" onAction="#updateLabel"/>
 			</VBox>
-            <Label styleClass="heading" text="Page Content"></Label>
+			<VBox>
+			    <Button text="Display Alarm" onAction="#showAlarm"/>
+			</VBox>
+			<HBox>
+            <StackPane fx:id="alarmPanelHot" style="-fx-background-color: red; -fx-padding: 20px;" visible="false">
+		        <Label fx:id="alarmLabel" text="Alarm is ringing!" style="-fx-font-size: 24px;" />
+		    </StackPane>
+		    <StackPane fx:id="alarmPanelCold" style="-fx-background-color: blue; -fx-padding: 20px;" visible="false">
+		        <Label fx:id="alarmLabel" text="Alarm is ringing!" style="-fx-font-size: 24px;" />
+		    </StackPane>
+		    </HBox>
             <Label fx:id="yourLabel">
                 <text>
                  This is a simple application to check the Weather.

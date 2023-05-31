@@ -14,5 +14,5 @@ public class WeatherForecast {
 	public void setCurrent(WeatherCondition current) {
 		this.current = current;
 	}
-	
+
 }

@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 
 public class WeatherAppController {
 
@@ -23,6 +24,19 @@ public class WeatherAppController {
 		System.out.println("Hello, World!");
 		yourLabel.setText("Facux");
 
+	}
+
+	@FXML
+	private StackPane alarmPanelHot;
+
+	@FXML
+	private StackPane alarmPanelCold;
+
+	@FXML
+	private void showAlarm(ActionEvent event) {
+		event.consume();
+		alarmPanelHot.setVisible(!alarmPanelHot.isVisible());
+		alarmPanelCold.setVisible(!alarmPanelCold.isVisible());
 	}
 
 	@FXML
@@ -41,8 +55,6 @@ public class WeatherAppController {
 	private Label yourLabel;
 
 	private void getForecast(String location) {
-
-		
 		try {
 			URIBuilder ub = new URIBuilder(
 					"http://api.weatherapi.com/v1/forecast.json?key=06712f56f6e2431590b184348232905");
@@ -77,9 +89,9 @@ public class WeatherAppController {
 			System.out.println("Response Body: " + response.toString());
 			ObjectMapper objectMapper = new ObjectMapper();
 
-            // Deserialize the JSON into the ApiResponse class
+			// Deserialize the JSON into the ApiResponse class
 			WeatherForecast forecast = objectMapper.readValue(response.toString(), WeatherForecast.class);
-			
+
 			System.out.println("forecast" + forecast.getCurrent().getTemp_c());
 			// Close connection
 			connection.disconnect();
