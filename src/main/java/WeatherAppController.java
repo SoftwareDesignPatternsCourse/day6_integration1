@@ -8,6 +8,8 @@ import java.net.URL;
 import org.apache.http.client.utils.URIBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.weather.forecaster.ApiForecastBuilder;
+import com.weather.forecaster.ApiResponse;
 import com.weather.forecaster.WeatherForecast;
 
 import javafx.event.ActionEvent;
@@ -56,45 +58,25 @@ public class WeatherAppController {
 
 	private void getForecast(String location) {
 		try {
-			URIBuilder ub = new URIBuilder(
-					"http://api.weatherapi.com/v1/forecast.json?key=06712f56f6e2431590b184348232905");
-			ub.addParameter("q", location);
-			ub.addParameter("days", "1");
-			ub.addParameter("aqi", "no");
-			ub.addParameter("alerts", "no");
+			ApiForecastBuilder apiForecastBuilder = new ApiForecastBuilder();
+			apiForecastBuilder.setKey("http://api.weatherapi.com/v1/forecast.json?key=06712f56f6e2431590b184348232905");
+			apiForecastBuilder.setLocation(location);
+			apiForecastBuilder.setDays(1);
+			apiForecastBuilder.setAlerts(true);
+			apiForecastBuilder.setAqi(false);
+					
+			
+			// apiForecastBuilder.addDays(5);
+			
+			ApiResponse response = apiForecastBuilder.build().get();
+			
 
-			// Create URL object with the API endpoint
-			URL url = new URL(ub.toString());
-
-			// Open connection
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-			// Set request method
-			connection.setRequestMethod("GET");
-
-			// Get response code
-			int responseCode = connection.getResponseCode();
-			System.out.println("Response Code: " + responseCode);
-
-			// Read response
-			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
-			StringBuilder response = new StringBuilder();
-			while ((line = reader.readLine()) != null) {
-				response.append(line);
-			}
-			reader.close();
-
-			// Print response
-			System.out.println("Response Body: " + response.toString());
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			// Deserialize the JSON into the ApiResponse class
-			WeatherForecast forecast = objectMapper.readValue(response.toString(), WeatherForecast.class);
+			WeatherForecast forecast = objectMapper.readValue(response.responseBody(), WeatherForecast.class);
 
 			System.out.println("forecast" + forecast.getCurrent().getTemp_c());
-			// Close connection
-			connection.disconnect();
 
 		} catch (IOException e) {
 			e.printStackTrace();
