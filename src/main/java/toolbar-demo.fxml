@@ -1,0 +1,59 @@
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.TextField?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="WeatherAppController">
+    <top>
+        <ToolBar styleClass="toolbar">
+            <Button text="Weather" onAction="#printHelloWorld">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@img/icon_weather.png"></Image>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Separator></Separator>
+            <Pane HBox.hgrow="ALWAYS"></Pane>
+            
+        </ToolBar>
+    </top>
+    <center>
+        <VBox styleClass="content">
+	        <VBox>
+			    <TextField fx:id="inputTextField" promptText="Enter text"/>
+			    <Button text="Update Label" onAction="#updateLabel"/>
+			    <Label fx:id="yourLabel" text="Default Value"/>
+			</VBox>
+            <Label styleClass="heading" text="Page Content"></Label>
+            <Label fx:id="yourLabel">
+                <text>
+                 This is a simple application to check the Weather.
+                </text>
+            </Label>
+            <Label>
+                <text>
+                    
+                </text>
+            </Label>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox styleClass="footer">
+            <Label text="Copyright 2017 CalliCoder"></Label>
+        </HBox>
+    </bottom>
+
+    <stylesheets>
+        <URL value="@toolbar-demo.css"></URL>
+    </stylesheets>
+</BorderPane>
