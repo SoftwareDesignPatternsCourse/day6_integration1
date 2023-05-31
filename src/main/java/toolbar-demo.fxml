@@ -14,7 +14,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="WeatherAppController">
     <top>
         <ToolBar styleClass="toolbar">
-            <Button text="Weather" onAction="#printHelloWorld">
+            <Button text="Weather">
                 <graphic>
                     <ImageView>
                         <image>
@@ -31,8 +31,8 @@
     <center>
         <VBox styleClass="content">
 	        <VBox>
-			    <TextField fx:id="inputTextField" promptText="Enter a city"/>
-			    <Button text="Get Weather" onAction="#updateLabel"/>
+			    <TextField fx:id="cityField" promptText="Enter a city"/>
+			    <Button text="Get Weather" onAction="#findCityWeather"/>
 			</VBox>
 			<VBox>
 			    <Button text="Display Alarm" onAction="#showAlarm"/>

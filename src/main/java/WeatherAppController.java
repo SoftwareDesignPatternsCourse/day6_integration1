@@ -1,16 +1,11 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
-import java.net.URL;
-
-import org.apache.http.client.utils.URIBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weather.forecaster.ApiForecastBuilder;
 import com.weather.forecaster.ApiResponse;
 import com.weather.forecaster.WeatherForecast;
+import com.weather.state.WeatherState;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,14 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 
 public class WeatherAppController {
-
-	@FXML
-	private void printHelloWorld(ActionEvent event) {
-		event.consume();
-		System.out.println("Hello, World!");
-		yourLabel.setText("Facux");
-
-	}
 
 	@FXML
 	private StackPane alarmPanelHot;
@@ -42,16 +29,15 @@ public class WeatherAppController {
 	}
 
 	@FXML
-	private void updateLabel(ActionEvent event) {
+	private void findCityWeather(ActionEvent event) {
 		event.consume();
-		System.out.println("Hello, World!");
-		String location = inputTextField.getText();
-		yourLabel.setText(location);
+		String location = cityField.getText();
+		
 		this.getForecast(location);
 	}
 
 	@FXML
-	private TextField inputTextField;
+	private TextField cityField;
 
 	@FXML
 	private Label yourLabel;
@@ -65,18 +51,23 @@ public class WeatherAppController {
 			apiForecastBuilder.setAlerts(true);
 			apiForecastBuilder.setAqi(false);
 					
-			
-			// apiForecastBuilder.addDays(5);
-			
 			ApiResponse response = apiForecastBuilder.build().get();
 			
-
 			ObjectMapper objectMapper = new ObjectMapper();
 
-			// Deserialize the JSON into the ApiResponse class
 			WeatherForecast forecast = objectMapper.readValue(response.responseBody(), WeatherForecast.class);
 
-			System.out.println("forecast" + forecast.getCurrent().getTemp_c());
+			if (forecast.getCurrent().getTemp_c() > 10) {
+				alarmPanelHot.setVisible(!alarmPanelHot.isVisible());
+				
+			} else {
+				alarmPanelCold.setVisible(!alarmPanelCold.isVisible());
+			}
+			
+			
+			
+			WeatherState.getInstance().setWeather(forecast);
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();

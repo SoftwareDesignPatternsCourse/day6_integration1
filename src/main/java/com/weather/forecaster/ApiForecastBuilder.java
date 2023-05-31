@@ -2,9 +2,9 @@ package com.weather.forecaster;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.apache.http.client.utils.URIBuilder;
-import java.net.URL;
 
 public class ApiForecastBuilder {
 
